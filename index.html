@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1xCasino Blogger Registration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .warning-box p {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .warning-box a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .warning-box a:hover {
+            text-decoration: underline;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+        }
+
+        .hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        input.invalid, textarea.invalid {
+            border-color: #dc3545;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .success-message h2 {
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+
+        .success-message p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .back-btn {
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            background: #5568d3;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .code-counter {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="formSection">
+            <h1>🎰 1xCasino Registration, activation and promo code request form</h1>
+
+            <div class="warning-box">
+                <p>TO GET STARTED, REGISTER ON</p>
+                <a href="https://1xcasino.partners/sign-up" target="_blank">https://1xcasino.partners/sign-up</a>
+                <p style="margin-top: 15px;">AFTER REGISTRATION, PLEASE GIVE UP TO 48 HOURS FOR ACTIVATION.</p>
+                <p style="margin-top: 15px;">WHEN YOU RECEIVE AN ACTIVATION EMAIL, PLEASE RETURN TO THIS FORM AND FILL THE FOLLOWING INFORMATION REQUESTED BELOW</p>
+            </div>
+
+            <div class="form-group">
+                <label for="affiliateId">Affiliate ID (Must consist of only numbers) *</label>
+                <input type="text" id="affiliateId" placeholder="e.g., 123456">
+                <div class="error" id="affiliateIdError">Affiliate ID must contain only numbers</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Registered Email (Must be an active email registered on the partner account) *</label>
+                <input type="email" id="email" placeholder="your@email.com">
+                <div class="error" id="emailError">Please enter a valid email address</div>
+            </div>
+
+            <div class="form-group">
+                <label for="trafficSource">Traffic Source (Channel Link) *</label>
+                <input type="text" id="trafficSource" placeholder="e.g., Telegram channel, Facebook page, YouTube">
+                <div class="error" id="trafficSourceError">Traffic source is required</div>
+            </div>
+
+            <div class="form-group">
+                <label for="contactHandle">Contact Handle *</label>
+                <input type="text" id="contactHandle" placeholder="e.g., @telegram_username, WhatsApp: +1234567890">
+                <div class="error" id="contactHandleError">Contact handle is required</div>
+            </div>
+
+            <div class="form-group">
+                <label for="promoCodes">Promo Codes *</label>
+                <div class="hint">
+                    Enter your promo codes (one per line, up to 40 codes). At least ONE code is required.
+                    Only alphanumeric characters and underscores (_) are allowed. Minimum 4 characters per code.
+                    No spaces, commas, or special characters.
+                </div>
+                <textarea id="promoCodes" rows="8" placeholder="CODE_ONE&#10;PROMO_2024&#10;BONUS_CODE"></textarea>
+                <div class="code-counter" id="codeCounter">Codes entered: 0 / 40</div>
+                <div class="error" id="promoCodesError">Please check your promo codes</div>
+            </div>
+
+            <button class="submit-btn" id="submitBtn" onclick="submitForm()">Submit Registration</button>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 10px; color: #666;">Submitting your registration...</p>
+            </div>
+
+            <div class="info-box">
+                <strong>Note:</strong> Your IP address is (<span id="userIP">Loading...</span>) and location (<span id="userCountry">Loading...</span>). Please ensure that all information provided during registration is accurate; otherwise, promotional codes may not be applied to your account. 
+            </div>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <div class="success-icon">✓</div>
+            <h2>Registration Submitted Successfully!</h2>
+            <p>Your information has been recorded. You will receive a confirmation email shortly.</p>
+            <button class="back-btn" onclick="resetForm()">Submit Another Registration</button>
+        </div>
+    </div>
+
+    <script>
+        // IMPORTANT: Replace this URL with your Google Apps Script Web App URL
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDT8xwRtjaHxxoSi7f4f-LYMhDVKue5fFi5W2JbGfkpBn9gH8eARgNMyxa_IZzug1D/exec';
+
+        let userIP = 'Unknown';
+        let userCountry = 'Unknown';
+
+        // Get user's IP and country
+        fetch('https://api.ipify.org?format=json')
+            .then(res => res.json())
+            .then(data => {
+                userIP = data.ip;
+                document.getElementById('userIP').textContent = userIP;
+            })
+            .catch(() => {
+                document.getElementById('userIP').textContent = 'Unknown';
+            });
+
+        fetch('https://ipapi.co/json/')
+            .then(res => res.json())
+            .then(data => {
+                userCountry = data.country_name || 'Unknown';
+                document.getElementById('userCountry').textContent = userCountry;
+            })
+            .catch(() => {
+                document.getElementById('userCountry').textContent = 'Unknown';
+            });
+
+        // Update promo code counter
+        document.getElementById('promoCodes').addEventListener('input', function() {
+            const codes = this.value.split('\n').filter(c => c.trim());
+            document.getElementById('codeCounter').textContent = `Codes entered: ${codes.length} / 40`;
+        });
+
+        function validatePromoCode(code) {
+            if (code.length < 4) return 'Promo code must be at least 4 characters';
+            if (/^\d+$/.test(code)) return 'Promo code cannot be only numbers';
+            if (!/^[a-zA-Z0-9_]+$/.test(code)) return 'Only alphanumeric and underscore allowed';
+            return null;
+        }
+
+        function submitForm() {
+            // Clear previous errors
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('show'));
+            document.querySelectorAll('input, textarea').forEach(el => el.classList.remove('invalid'));
+
+            let isValid = true;
+
+            // Validate Affiliate ID
+            const affiliateId = document.getElementById('affiliateId').value.trim();
+            if (!affiliateId) {
+                showError('affiliateId', 'Affiliate ID is required');
+                isValid = false;
+            } else if (!/^\d+$/.test(affiliateId)) {
+                showError('affiliateId', 'Affiliate ID must contain only numbers');
+                isValid = false;
+            }
+
+            // Validate Email
+            const email = document.getElementById('email').value.trim();
+            if (!email) {
+                showError('email', 'Email is required');
+                isValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError('email', 'Please enter a valid email address');
+                isValid = false;
+            }
+
+            // Validate Traffic Source
+            const trafficSource = document.getElementById('trafficSource').value.trim();
+            if (!trafficSource) {
+                showError('trafficSource', 'Traffic source is required');
+                isValid = false;
+            }
+
+            // Validate Contact Handle
+            const contactHandle = document.getElementById('contactHandle').value.trim();
+            if (!contactHandle) {
+                showError('contactHandle', 'Contact handle is required');
+                isValid = false;
+            }
+
+            // Validate Promo Codes
+            const promoCodesText = document.getElementById('promoCodes').value.trim();
+            if (!promoCodesText) {
+                showError('promoCodes', 'At least one promo code is required');
+                isValid = false;
+            } else {
+                const codes = promoCodesText.split('\n').filter(c => c.trim());
+                
+                if (codes.length > 40) {
+                    showError('promoCodes', 'Maximum 40 promo codes allowed');
+                    isValid = false;
+                }
+
+                // Check for special characters, spaces, commas
+                const hasInvalidChars = codes.some(code => /[,.\s]/.test(code));
+                if (hasInvalidChars) {
+                    showError('promoCodes', 'Promo codes cannot contain spaces, commas, or periods. One code per line only.');
+                    isValid = false;
+                }
+
+                // Validate each code
+                for (let code of codes) {
+                    const error = validatePromoCode(code.trim());
+                    if (error) {
+                        showError('promoCodes', `Invalid code "${code.trim()}": ${error}`);
+                        isValid = false;
+                        break;
+                    }
+                }
+            }
+
+            if (!isValid) {
+                return;
+            }
+
+            // Prepare data
+            const codes = promoCodesText.split('\n').filter(c => c.trim()).map(c => c.trim());
+            const submissionDate = new Date().toLocaleDateString('en-GB');
+            
+            const data = {
+                affiliateId: affiliateId,
+                email: email,
+                trafficSource: trafficSource,
+                contactHandle: contactHandle,
+                promoCodes: codes.join(', '),
+                ipAddress: userIP,
+                country: userCountry,
+                submissionDate: submissionDate,
+                activation: `1xcasino activation\n\nEmail: ${email} and Aff ID ${affiliateId}\n1) RS 25% start ${submissionDate}\n2) Charles - Group [SMM Dmitriy] charles_1xcasino\n3) Geo:${userCountry}\n4)Traffic: ${trafficSource}\n5) Username: ${contactHandle}\n\n@nataliagal_b`
+            };
+
+            // Show loading
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('loading').classList.add('show');
+
+            // Send to Google Sheets
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                // Hide loading
+                document.getElementById('loading').classList.remove('show');
+                document.getElementById('submitBtn').disabled = false;
+                
+                // Show success message
+                document.getElementById('formSection').style.display = 'none';
+                document.getElementById('successMessage').classList.add('show');
+            })
+            .catch(error => {
+                alert('Error submitting form. Please try again.');
+                console.error('Error:', error);
+                document.getElementById('loading').classList.remove('show');
+                document.getElementById('submitBtn').disabled = false;
+            });
+        }
+
+        function showError(fieldId, message) {
+            document.getElementById(fieldId).classList.add('invalid');
+            const errorEl = document.getElementById(fieldId + 'Error');
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
+        }
+
+        function resetForm() {
+            document.getElementById('formSection').style.display = 'block';
+            document.getElementById('successMessage').classList.remove('show');
+            document.getElementById('affiliateId').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('trafficSource').value = '';
+            document.getElementById('contactHandle').value = '';
+            document.getElementById('promoCodes').value = '';
+            document.getElementById('codeCounter').textContent = 'Codes entered: 0 / 40';
+        }
+    </script>
+</body>
+</html>
