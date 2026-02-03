@@ -214,6 +214,48 @@
             color: #666;
             margin-top: 5px;
         }
+
+        .restriction-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .restriction-message.show {
+            display: block;
+        }
+
+        .restriction-icon {
+            font-size: 80px;
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+
+        .restriction-message h2 {
+            color: #dc3545;
+            margin-bottom: 15px;
+        }
+
+        .restriction-message p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .error-box {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .error-box p {
+            font-weight: bold;
+            color: #721c24;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
@@ -276,11 +318,17 @@
             </div>
         </div>
 
+        <div class="restriction-message" id="restrictionMessage">
+            <div class="restriction-icon">🚫</div>
+            <h2>Access Restricted</h2>
+            <p id="restrictionText"></p>
+        </div>
+
         <div class="success-message" id="successMessage">
             <div class="success-icon">✓</div>
             <h2>Registration Submitted Successfully!</h2>
             <p>Your information has been recorded. You will receive a confirmation email shortly.</p>
-            <button class="back-btn" onclick="resetForm()">Submit Another Registration</button>
+            <p style="font-size: 12px; color: #999;">Note: Only one submission is allowed per user.</p>
         </div>
     </div>
 
@@ -288,29 +336,76 @@
         // IMPORTANT: Replace this URL with your Google Apps Script Web App URL
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDT8xwRtjaHxxoSi7f4f-LYMhDVKue5fFi5W2JbGfkpBn9gH8eARgNMyxa_IZzug1D/exec';
 
+        // Restricted countries
+        const RESTRICTED_COUNTRIES = ['US', 'GB', 'CA', 'DE'];
+        const RESTRICTED_COUNTRY_NAMES = {
+            'US': 'United States',
+            'GB': 'United Kingdom',
+            'CA': 'Canada',
+            'DE': 'Germany'
+        };
+
         let userIP = 'Unknown';
         let userCountry = 'Unknown';
+        let userCountryCode = '';
+        let isRestricted = false;
+
+        // Check if user has already submitted
+        function checkPreviousSubmission() {
+            const hasSubmitted = localStorage.getItem('1xcasino_submitted');
+            if (hasSubmitted === 'true') {
+                showRestriction('You have already submitted a registration. Only one submission is allowed per user.');
+                return true;
+            }
+            return false;
+        }
 
         // Get user's IP and country
-        fetch('https://api.ipify.org?format=json')
-            .then(res => res.json())
-            .then(data => {
-                userIP = data.ip;
+        async function getUserLocation() {
+            try {
+                // Get IP address
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                userIP = ipData.ip;
                 document.getElementById('userIP').textContent = userIP;
-            })
-            .catch(() => {
-                document.getElementById('userIP').textContent = 'Unknown';
-            });
 
-        fetch('https://ipapi.co/json/')
-            .then(res => res.json())
-            .then(data => {
-                userCountry = data.country_name || 'Unknown';
+                // Get country information
+                const countryResponse = await fetch('https://ipapi.co/json/');
+                const countryData = await countryResponse.json();
+                userCountry = countryData.country_name || 'Unknown';
+                userCountryCode = countryData.country_code || '';
                 document.getElementById('userCountry').textContent = userCountry;
-            })
-            .catch(() => {
+
+                // Check if country is restricted
+                if (RESTRICTED_COUNTRIES.includes(userCountryCode)) {
+                    isRestricted = true;
+                    const countryName = RESTRICTED_COUNTRY_NAMES[userCountryCode] || userCountry;
+                    showRestriction(`We're sorry, but registrations from ${countryName} are not accepted at this time. Your country is on our restricted list.`);
+                }
+            } catch (error) {
+                console.error('Error fetching location:', error);
+                document.getElementById('userIP').textContent = 'Unknown';
                 document.getElementById('userCountry').textContent = 'Unknown';
-            });
+            }
+        }
+
+        // Show restriction message
+        function showRestriction(message) {
+            document.getElementById('restrictionText').textContent = message;
+            document.getElementById('formSection').style.display = 'none';
+            document.getElementById('restrictionMessage').classList.add('show');
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', async function() {
+            // Check for previous submission
+            if (checkPreviousSubmission()) {
+                return;
+            }
+
+            // Get user location and check restrictions
+            await getUserLocation();
+        });
 
         // Update promo code counter
         document.getElementById('promoCodes').addEventListener('input', function() {
@@ -326,6 +421,18 @@
         }
 
         function submitForm() {
+            // Check if country is restricted
+            if (isRestricted) {
+                alert('Submissions from your country are not allowed.');
+                return;
+            }
+
+            // Check if already submitted
+            if (localStorage.getItem('1xcasino_submitted') === 'true') {
+                alert('You have already submitted a registration. Only one submission is allowed per user.');
+                return;
+            }
+
             // Clear previous errors
             document.querySelectorAll('.error').forEach(el => el.classList.remove('show'));
             document.querySelectorAll('input, textarea').forEach(el => el.classList.remove('invalid'));
@@ -413,6 +520,7 @@
                 promoCodes: codes.join(', '),
                 ipAddress: userIP,
                 country: userCountry,
+                countryCode: userCountryCode,
                 submissionDate: submissionDate,
                 activation: `1xcasino activation\n\nEmail: ${email} and Aff ID ${affiliateId}\n1) RS 25% start ${submissionDate}\n2) Group [SMM Dmitriy]    @Partnermanager1xbet\n3) Geo:${userCountry}\n4)Traffic: ${trafficSource}\n5) Username: ${contactHandle}\n\n@nataliagal_b`
             };
@@ -431,6 +539,9 @@
                 body: JSON.stringify(data)
             })
             .then(() => {
+                // Mark as submitted in localStorage
+                localStorage.setItem('1xcasino_submitted', 'true');
+                
                 // Hide loading
                 document.getElementById('loading').classList.remove('show');
                 document.getElementById('submitBtn').disabled = false;
@@ -452,17 +563,6 @@
             const errorEl = document.getElementById(fieldId + 'Error');
             errorEl.textContent = message;
             errorEl.classList.add('show');
-        }
-
-        function resetForm() {
-            document.getElementById('formSection').style.display = 'block';
-            document.getElementById('successMessage').classList.remove('show');
-            document.getElementById('affiliateId').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('trafficSource').value = '';
-            document.getElementById('contactHandle').value = '';
-            document.getElementById('promoCodes').value = '';
-            document.getElementById('codeCounter').textContent = 'Codes entered: 0 / 40';
         }
     </script>
 </body>
